@@ -1,0 +1,272 @@
+================================================================================
+  KAYO SCRIPT GENERATOR - REMOTE GUI ACCESS QUICK REFERENCE
+================================================================================
+
+📋 QUICK SETUP GUIDE
+
+Choose your platform and use case below:
+
+================================================================================
+FOR LINUX/UBUNTU SERVERS (Recommended)
+================================================================================
+
+QUICKEST SETUP (5 minutes):
+
+1. On your Ubuntu/Debian server:
+   
+   sudo bash <(curl -fsSL https://raw.githubusercontent.com/Jakes1987/drmscript/main/setup-nginx-remote.sh)
+
+2. Choose your domain or IP when prompted
+
+3. Get a free SSL certificate:
+   
+   sudo certbot certonly --webroot -w /var/www/certbot -d your-domain.com
+
+4. Start your application:
+   
+   kayo-script-gen
+
+5. Access remotely:
+   
+   https://your-domain.com
+
+📖 Full guide: NGINX_SETUP_GUIDE.md
+
+================================================================================
+FOR WINDOWS USERS
+================================================================================
+
+OPTION 1: NGROK (Easiest - 10 minutes)
+   - Download: https://ngrok.com/download
+   - Run: ngrok http 5000
+   - Access: https://xxxx-xxxxx.ngrok.io
+   
+   Pros: Automatic HTTPS, no setup needed
+   Cons: URL changes on restart, requires internet
+
+OPTION 2: PORT FORWARDING (Permanent - 15 minutes)
+   - Open port 5000 on your router
+   - Find your public IP
+   - Access: http://your-public-ip:5000
+   
+   Pros: Permanent, always available
+   Cons: No HTTPS, exposed to internet
+
+OPTION 3: CLOUDFLARE TUNNEL (Best - 20 minutes)
+   - Download CloudFlare connector
+   - Create tunnel to your domain
+   - Automatic HTTPS and DDoS protection
+   
+   Pros: Secure, free DDoS protection, professional
+   Cons: Requires domain, Cloudflare account
+
+OPTION 4: WSL + NGINX (Production - 30 minutes)
+   - Install WSL 2
+   - Run setup-nginx-remote.sh in WSL
+   - Full control and customization
+
+📖 Full guide: REMOTE_ACCESS_WINDOWS.md
+
+================================================================================
+REMOTE ACCESS METHODS COMPARISON
+================================================================================
+
+METHOD              | SETUP TIME | HTTPS  | SECURITY | RELIABILITY | FREE
+--------------------|------------|--------|----------|-------------|-----
+Port Forwarding     | 10 min     | ❌     | ⚠️       | 🟡         | ✅
+Ngrok               | 5 min      | ✅     | ✅       | ✅         | ⭐
+IIS Proxy           | 30 min     | ⭐     | ✅       | ✅         | ✅
+CloudFlare Tunnel   | 20 min     | ✅     | ✅✅     | ✅✅       | ✅
+Nginx (WSL)         | 30 min     | ✅     | ✅✅     | ✅✅       | ✅
+SSH Tunnel          | 15 min     | ✅     | ✅✅     | ⚠️         | ✅
+
+================================================================================
+STEP-BY-STEP: UBUNTU/LINUX (Most Popular)
+================================================================================
+
+STEP 1: Run Setup Script
+   sudo bash <(curl -fsSL https://raw.githubusercontent.com/Jakes1987/drmscript/main/setup-nginx-remote.sh)
+
+   Or save first:
+   curl -fsSL https://raw.githubusercontent.com/Jakes1987/drmscript/main/setup-nginx-remote.sh -o setup-nginx-remote.sh
+   sudo bash setup-nginx-remote.sh
+
+STEP 2: Get SSL Certificate (Choose One)
+
+   A) Let's Encrypt (Free, Recommended):
+      sudo apt-get install -y certbot python3-certbot-nginx
+      sudo certbot certonly --webroot -w /var/www/certbot -d your-domain.com
+
+   B) Self-Signed (Testing Only):
+      sudo mkdir -p /etc/nginx/ssl
+      sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+        -keyout /etc/nginx/ssl/kayo-key.key \
+        -out /etc/nginx/ssl/kayo-cert.crt
+      
+      Then edit: sudo nano /etc/nginx/sites-available/kayo-script-gen
+      Change:
+        ssl_certificate /etc/nginx/ssl/kayo-cert.crt;
+        ssl_certificate_key /etc/nginx/ssl/kayo-key.key;
+
+STEP 3: Reload Nginx
+   sudo systemctl reload nginx
+
+STEP 4: Start Application
+   kayo-script-gen
+
+STEP 5: Access Remotely
+   https://your-domain-or-ip
+
+✅ DONE! Your GUI is now accessible remotely with HTTPS
+
+================================================================================
+STEP-BY-STEP: WINDOWS - NGROK (Quickest)
+================================================================================
+
+STEP 1: Download Ngrok
+   https://ngrok.com/download
+   Extract ngrok.exe to a folder
+
+STEP 2: Create Account & Get Token
+   https://dashboard.ngrok.com/signup
+   Copy your auth token
+
+STEP 3: Authenticate (PowerShell, in ngrok folder)
+   .\ngrok config add-authtoken YOUR_AUTH_TOKEN
+
+STEP 4: Start Application
+   python launcher.py
+   (Runs on localhost:5000)
+
+STEP 5: Start Tunnel (New PowerShell window)
+   .\ngrok http 5000
+
+STEP 6: Access Remotely
+   https://xxxx-xxxxx.ngrok.io
+   (URL shown in ngrok window)
+
+✅ DONE! Instant remote access with HTTPS
+
+================================================================================
+COMMON COMMANDS
+================================================================================
+
+LINUX/UBUNTU:
+
+Check Nginx status:         sudo systemctl status nginx
+Restart Nginx:              sudo systemctl restart nginx
+View access logs:           sudo tail -f /var/log/nginx/kayo-script-gen.access.log
+View error logs:            sudo tail -f /var/log/nginx/kayo-script-gen.error.log
+Test config:                sudo nginx -t
+Edit config:                sudo nano /etc/nginx/sites-available/kayo-script-gen
+Renew SSL cert:             sudo certbot renew
+Check cert expiry:          sudo certbot renew --dry-run
+
+WINDOWS:
+
+Start Application:          python launcher.py
+Start Ngrok Tunnel:         .\ngrok http 5000
+Open Firewall Port:         (see Windows Firewall settings)
+Check Port Available:       netstat -ano | findstr :5000
+Kill Process on Port:       taskkill /PID <PID> /F
+
+================================================================================
+SECURITY CHECKLIST
+================================================================================
+
+Before exposing your GUI remotely:
+
+☐ Always use HTTPS/TLS encryption
+☐ Keep OS and software updated
+☐ Use strong passwords on your application
+☐ Monitor access logs regularly
+☐ Use firewall rules (allow only necessary ports)
+☐ Don't expose on standard web ports if possible
+☐ Consider IP whitelisting
+☐ Use rate limiting to prevent brute force
+☐ Keep private keys secure
+☐ Regularly update SSL certificates
+☐ Use VPN for additional security (optional)
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+CAN'T ACCESS LOCALLY?
+  ✓ Check application is running: http://localhost:5000
+  ✓ Check firewall allows port 5000
+  ✓ Check port isn't already in use
+
+CAN'T ACCESS REMOTELY?
+  ✓ Test locally first
+  ✓ Check public IP/domain is correct
+  ✓ Check port forwarding (if applicable)
+  ✓ Check firewall rules
+  ✓ Check router firewall/UPnP
+
+SSL CERTIFICATE ERRORS?
+  ✓ Check certificate is valid for your domain
+  ✓ Clear browser cache/cookies
+  ✓ Check system date/time is correct
+  ✓ Try different browser
+
+NGINX WON'T START?
+  ✓ Test config: sudo nginx -t
+  ✓ Check logs: sudo tail -20 /var/log/nginx/error.log
+  ✓ Check port 80/443 not in use: sudo lsof -i :80
+  ✓ Reinstall: sudo apt-get install --reinstall nginx
+
+APPLICATION SLOW?
+  ✓ Check firewall/ISP throttling
+  ✓ Check network bandwidth
+  ✓ Check server resources (CPU, RAM)
+  ✓ Enable compression in nginx
+  ✓ Enable caching in browser
+
+================================================================================
+USEFUL RESOURCES
+================================================================================
+
+File Structure:
+  /etc/nginx/sites-available/kayo-script-gen    <- Main Nginx config
+  /var/log/nginx/kayo-script-gen.access.log     <- Access logs
+  /var/log/nginx/kayo-script-gen.error.log      <- Error logs
+  /etc/letsencrypt/live/                        <- SSL certificates
+  ~/.local/kayo-script-gen/                     <- Application folder
+
+Documentation:
+  NGINX_SETUP_GUIDE.md            <- Complete Nginx guide
+  REMOTE_ACCESS_WINDOWS.md        <- Windows options
+  GITHUB_UBUNTU_SETUP.md          <- Ubuntu installation
+  README.md                       <- Main documentation
+
+External Links:
+  Nginx Docs:         https://nginx.org/en/docs/
+  Let's Encrypt:      https://letsencrypt.org/
+  Ngrok:              https://ngrok.com/
+  CloudFlare Tunnel:  https://developers.cloudflare.com/cloudflare-one/
+  WSL:                https://docs.microsoft.com/windows/wsl/
+
+================================================================================
+QUICK LINKS
+================================================================================
+
+GitHub Repository:      https://github.com/Jakes1987/drmscript
+Issue Tracker:          https://github.com/Jakes1987/drmscript/issues
+Ubuntu Installer:       https://raw.githubusercontent.com/Jakes1987/drmscript/main/install-ubuntu.sh
+Nginx Setup Script:     https://raw.githubusercontent.com/Jakes1987/drmscript/main/setup-nginx-remote.sh
+
+================================================================================
+NEXT STEPS
+================================================================================
+
+1. Choose your platform and setup method above
+2. Follow the step-by-step instructions
+3. Test locally first
+4. Test remotely
+5. Monitor logs and keep updated
+6. Enjoy remote access to your Kayo Script Generator!
+
+Questions or issues? See the full documentation files for more details.
+
+================================================================================
