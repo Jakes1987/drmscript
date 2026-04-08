@@ -43,7 +43,7 @@ download_file() {
         if curl --connect-timeout 30 --max-time 120 -fSL "$url" -o "$output" 2>&1; then
             # Check if file is not empty
             if [ -s "$output" ]; then
-                echo -e "${GREEN}  ✓ Successfully downloaded$(NC}"
+                echo -e "${GREEN}  ✓ Successfully downloaded${NC}"
                 return 0
             else
                 echo -e "${YELLOW}  ! File is empty, retrying...${NC}"
