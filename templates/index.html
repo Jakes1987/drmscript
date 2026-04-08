@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayo to O11V4 Script Generator</title>
+    <link rel="stylesheet" href="/templates/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>🎬 Kayo to O11V4 Script Generator</h1>
+                <p class="subtitle">Generate production-ready O11V4 provider scripts from Kayo credentials</p>
+            </div>
+        </header>
+
+        <main>
+            <div class="content-wrapper">
+                <!-- Left Panel: Form -->
+                <div class="form-panel">
+                    <div class="form-section">
+                        <h2>Step 1: Kayo Credentials</h2>
+                        
+                        <form id="generatorForm">
+                            <div class="form-group">
+                                <label for="username">Kayo Email/Username *</label>
+                                <input 
+                                    type="email" 
+                                    id="username" 
+                                    name="username" 
+                                    placeholder="user@example.com"
+                                    required
+                                    autocomplete="username"
+                                >
+                                <small>Your Kayo account email or username</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Kayo Password *</label>
+                                <input 
+                                    type="password" 
+                                    id="password" 
+                                    name="password" 
+                                    placeholder="••••••••"
+                                    required
+                                    autocomplete="current-password"
+                                >
+                                <small>Your Kayo account password</small>
+                            </div>
+
+                            <button type="button" id="testBtn" class="btn btn-secondary">
+                                Test Credentials
+                            </button>
+                            <span id="testResult" class="test-result"></span>
+
+                            <h2 style="margin-top: 30px;">Step 2: Configuration</h2>
+
+                            <div class="form-group">
+                                <label for="providerName">Provider Name</label>
+                                <input 
+                                    type="text" 
+                                    id="providerName" 
+                                    name="providerName" 
+                                    value="kayo"
+                                    placeholder="kayo"
+                                >
+                                <small>Name for the O11V4 provider (used in filenames)</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="outputDir">Output Directory</label>
+                                <input 
+                                    type="text" 
+                                    id="outputDir" 
+                                    name="outputDir" 
+                                    value="./output"
+                                    placeholder="./output"
+                                >
+                                <small>Directory to save generated files</small>
+                            </div>
+
+                            <div class="form-group checkbox">
+                                <input 
+                                    type="checkbox" 
+                                    id="includeConfig" 
+                                    name="includeConfig" 
+                                    checked
+                                >
+                                <label for="includeConfig">Include Configuration File (.json)</label>
+                                <small>Generate both script and config, or script only</small>
+                            </div>
+
+                            <h2 style="margin-top: 30px;">Step 3: Generate</h2>
+
+                            <button type="submit" id="generateBtn" class="btn btn-primary">
+                                Generate Script
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Right Panel: Status/Results -->
+                <div class="status-panel">
+                    <div class="status-section">
+                        <h2>Generation Status</h2>
+                        
+                        <div id="statusDisplay" class="status-display idle">
+                            <div class="status-icon">⏳</div>
+                            <div class="status-text">Ready</div>
+                        </div>
+
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <div id="progressText" class="progress-text">0%</div>
+                        </div>
+
+                        <div id="messageArea" class="message-area"></div>
+
+                        <div id="errorArea" class="error-area" style="display: none;"></div>
+
+                        <div id="resultsArea" class="results-area" style="display: none;">
+                            <h3>✓ Generation Complete!</h3>
+                            <dl class="results-list">
+                                <dt>Output Directory:</dt>
+                                <dd id="resultOutputDir" class="monospace"></dd>
+                                <dt>Files Generated:</dt>
+                                <dd id="resultFiles"></dd>
+                                <dt>Channels:</dt>
+                                <dd id="resultChannels"></dd>
+                                <dt>Events:</dt>
+                                <dd id="resultEvents"></dd>
+                            </dl>
+
+                            <div class="download-section">
+                                <h4>Download Files</h4>
+                                <div id="downloadLinks" class="download-links"></div>
+                            </div>
+
+                            <button id="resetBtn" class="btn btn-secondary">
+                                Generate Another
+                            </button>
+                        </div>
+
+                        <div id="helpArea" class="help-area">
+                            <h3>Next Steps</h3>
+                            <ol>
+                                <li>Enter your Kayo credentials and click "Test Credentials" to verify</li>
+                                <li>Configure the output settings (optional)</li>
+                                <li>Click "Generate Script" to create the O11V4 files</li>
+                                <li>Download the generated files</li>
+                                <li>Copy files to your O11V4 installation:
+                                    <ul>
+                                        <li><code>kayo.py</code> → <code>O11V4/scripts/</code></li>
+                                        <li><code>kayo.json</code> → <code>O11V4/providers/</code></li>
+                                    </ul>
+                                </li>
+                                <li>Restart O11V4 to load the new provider</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Kayo to O11V4 Script Generator • Built for O11V4 Streaming Panels</p>
+            <p><small>Keep your credentials safe. Generated scripts contain embedded credentials - store securely.</small></p>
+        </footer>
+    </div>
+
+    <script src="/templates/app.js"></script>
+</body>
+</html>

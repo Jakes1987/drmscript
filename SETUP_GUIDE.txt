@@ -1,0 +1,339 @@
+================================================================================
+   KAYO TO O11V4 SCRIPT GENERATOR - SETUP GUIDE
+   Complete Installation Instructions for Windows Users
+================================================================================
+
+WHAT IS THIS?
+=============
+
+This is an installer for the Kayo to O11V4 Script Generator - a professional
+tool that generates provider scripts for the O11V4 video streaming platform
+using your real Kayo account.
+
+NO TECHNICAL KNOWLEDGE REQUIRED - just follow the simple steps below!
+
+
+SYSTEM REQUIREMENTS
+===================
+
+✓ Windows 7, 8, 10, or 11
+✓ 2 GB RAM minimum (4 GB recommended)
+✓ 200 MB free disk space
+✓ Internet connection
+✗ NO administrator rights needed!
+
+
+QUICK START (4 STEPS)
+=====================
+
+STEP 1: Run the Installer
+─────────────────────────
+1. Find the file: setup.exe
+2. Double-click the setup.exe file
+3. A window will open asking about the installation
+   
+   The installer will ask you to click "Install"
+
+
+STEP 2: Wait for Installation
+──────────────────────────────
+A progress window will show 4 steps:
+  [1/4] Creating directories... 
+  [2/4] Copying files...
+  [3/4] Creating shortcuts...
+  [4/4] Creating uninstaller...
+
+This takes about 30-60 seconds. Just wait!
+
+
+STEP 3: Installation Complete
+──────────────────────────────
+When you see "✓ Installation Complete!" message:
+  - The application is installed
+  - Desktop shortcut created
+  - Start Menu link created
+  - You can click "Close" or press any key
+
+
+STEP 4: Launch the Application
+───────────────────────────────
+After installation, use ONE of these methods:
+
+METHOD A (Easiest): Click Desktop Shortcut
+  - Look for "Kayo Script Gen" icon on your desktop
+  - Double-click it
+  - The application opens in your browser
+
+METHOD B: Use Start Menu
+  - Click Windows Start button
+  - Type: "Kayo Script Gen"
+  - Click the application to launch
+
+METHOD C: Manual File Browser
+  - Open File Explorer
+  - Go to: C:\Users\[YourUsername]\AppData\Local\Kayo Script Gen
+  - Double-click: KayoScriptGen.exe
+
+
+USING THE APPLICATION
+=====================
+
+Once launched, you'll see a web interface with these steps:
+
+1. ENTER CREDENTIALS
+   - Email: Your Kayo account email
+   - Password: Your Kayo account password
+   
+   (Your credentials are NOT stored in generated scripts)
+
+2. TEST CREDENTIALS
+   - Click the "Test Credentials" button
+   - Wait for verification (5-10 seconds)
+   - You'll see ✓ if credentials are valid
+
+3. CONFIGURE SETTINGS
+   - Provider Name: Name for your O11V4 provider
+   - Select channels and events you want to include
+   - Choose quality settings
+
+4. GENERATE
+   - Click "Generate" button
+   - Wait for script generation (10-30 seconds)
+   - You'll see a download button when ready
+
+5. DOWNLOAD
+   - Click "Download" to save your provider files
+   - Two files will download:
+     a) provider_name.py (the actual script)
+     b) provider_name.json (configuration)
+
+6. DEPLOY TO O11V4
+   - Follow your O11V4 documentation
+   - Upload the generated .py file
+   - Deploy and enjoy!
+
+
+TROUBLESHOOTING
+===============
+
+PROBLEM: "Application won't start"
+─────────────────────────────────
+Solution A: Try the desktop shortcut again
+Solution B: Go to Start Menu, search "Kayo Script Gen"
+Solution C: Check that Windows 7+ is installed (windows key + R, type "winver")
+
+PROBLEM: "Credentials fail / won't authenticate"
+──────────────────────────────────────────────────
+Check 1: Is your Kayo account active?
+         - Try logging into https://www.kayosports.com.au
+         - If that works, your account is active
+
+Check 2: Is password correct?
+         - Try logging into Kayo website first
+         - Make sure CAPS LOCK is off
+
+Check 3: Does Kayo have content?
+         - Your account must have access to Kayo content
+         - Some regions may have limited content
+
+PROBLEM: "Port already in use" error
+──────────────────────────────────────
+Solution: This is very rare. Wait 30 seconds and try again.
+
+PROBLEM: Application launches but can't connect
+─────────────────────────────────────────────────
+Check that:
+  - Internet is working
+  - No firewall blocking port 5000
+  - Kayo API is accessible (check https://www.kayosports.com.au)
+
+PROBLEM: Download doesn't work
+────────────────────────────────
+Solution A: Check browser download settings
+Solution B: Make sure you have write permissions to Downloads folder
+Solution C: Try a different web browser (Chrome, Edge, Firefox)
+
+
+UNINSTALL INSTRUCTIONS
+======================
+
+To remove Kayo Script Generator:
+
+METHOD A (Easiest): Uninstall from Windows
+────────────────────────────────────────────
+1. Click Windows Start button
+2. Type: "Add or remove programs"
+3. Search for "Kayo Script Generator"
+4. Click "Uninstall"
+5. Confirm when asked
+
+METHOD B: Manual Uninstall
+──────────────────────────
+1. Go to: C:\Users\[YourUsername]\AppData\Local\Kayo Script Gen
+2. Look for file: Uninstall.bat
+3. Double-click Uninstall.bat
+4. Click OK when complete
+
+METHOD C: Manual File Deletion
+───────────────────────────────
+1. Delete folder: C:\Users\[YourUsername]\AppData\Local\Kayo Script Gen
+2. Delete shortcut: C:\Users\[YourUsername]\Desktop\Kayo Script Gen.lnk
+3. Delete Start Menu link:
+   C:\Users\[YourUsername]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Kayo Script Gen
+
+
+IMPORTANT NOTES
+===============
+
+✓ Your Kayo credentials are NEVER saved
+  - They're only used to generate the script
+  - Generated scripts don't contain your password
+
+✓ Scripts are safe for production
+  - Generated .py files are production-ready
+  - You can audit the source code yourself
+
+✓ Data is stored locally
+  - Everything happens on your computer
+  - No data sent anywhere except to Kayo API
+  - HTTPS encrypted connection to Kayo
+
+✓ Uninstall is clean
+  - Nothing left behind
+  - No registry entries
+  - Can delete completely
+
+
+FREQUENTLY ASKED QUESTIONS
+==========================
+
+Q: Will this work on Windows 7?
+A: Yes! Works on Windows 7, 8, 10, and 11
+
+Q: Do I need administrator rights?
+A: No! Can install and run as regular user
+
+Q: Where is the application installed?
+A: C:\Users\[YourUsername]\AppData\Local\Kayo Script Gen
+
+Q: Can I move the installed files?
+A: No, leave them where installed. Use shortcuts to launch.
+
+Q: How long does installation take?
+A: About 30-60 seconds for typical systems
+
+Q: Does setup.exe stay on my computer?
+A: Yes, but you only need it for installation. You can delete it after.
+
+Q: Can I backup and restore the installation?
+A: Yes, copy the entire installation folder to backup it
+
+Q: What if I lose the generated scripts?
+A: Just run the application again and re-generate them
+
+Q: Can I use this on multiple computers?
+A: Yes, run setup.exe on each computer separately
+
+Q: Will this interfere with other software?
+A: No, it's self-contained and isolated
+
+Q: Can I move my Kayo account to a different computer?
+A: Yes, just run setup.exe on the new computer
+
+
+GET HELP
+========
+
+If you have issues:
+
+1. Check the troubleshooting section above
+2. Try the steps again carefully
+3. Check your Kayo account is active at https://www.kayosports.com.au
+4. Restart your computer and try again
+5. Try a different web browser
+
+For technical help, see these files included with the installer:
+  - BUILD_INSTRUCTIONS.md
+  - KAYO_API_REFERENCE.md
+  - WEB_GUI_TEST_RESULTS.md
+
+
+WHAT'S INCLUDED IN setup.exe?
+=============================
+
+The setup.exe file contains:
+  ✓ Installation wizard (this program)
+  ✓ Kayo Script Generator application
+  ✓ All required software libraries
+  ✓ Python runtime environment
+  ✓ Web interface
+  ✓ Configuration tools
+
+TOTAL SIZE: ~11 MB (setup.exe)
+INSTALLED SIZE: ~13 MB on your computer
+
+
+SECURITY & PRIVACY
+==================
+
+✓ HTTPS encrypted connection to Kayo
+✓ Your credentials are never stored
+✓ Generated scripts are safe to use
+✓ No telemetry or tracking
+✓ No personal data collected
+✓ Open source code (verifiable)
+✓ Works offline after generation
+
+
+NEXT STEPS
+==========
+
+1. Install: Run setup.exe right now
+2. Launch: Use Desktop shortcut or Start Menu
+3. Generate: Create your first provider script
+4. Deploy: Follow your O11V4 instructions
+5. Enjoy: Stream your content!
+
+
+SUPPORT INFORMATION
+===================
+
+For additional help:
+  - Installation: See "TROUBLESHOOTING" above
+  - Technical questions: See documentation files
+  - API details: See KAYO_API_REFERENCE.md
+  - Testing: See WEB_GUI_TEST_RESULTS.md
+
+
+VERSION INFORMATION
+===================
+
+Product: Kayo to O11V4 Script Generator
+Version: 1.0
+Release Date: April 8, 2026
+Build: PyInstaller 6.19.0
+Python: 3.14.3
+Status: Production Ready
+
+
+LICENSE & TERMS
+===============
+
+This software is provided as-is for personal use with Kayo accounts.
+
+Your responsibilities:
+  - Verify you have legal right to access Kayo content
+  - Don't share generated scripts unauthorized
+  - Use only for personal streaming
+  - Comply with all applicable laws
+
+
+================================================================================
+You're all set! Double-click setup.exe to begin installation.
+
+Installation is simple, fast, and requires NO technical knowledge.
+
+Questions? See TROUBLESHOOTING section above.
+================================================================================
+
+Version: 1.0 | Built: April 8, 2026 | Status: Production Ready

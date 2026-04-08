@@ -1,0 +1,64 @@
+# Share This With Users - Nothing Else Needed
+
+## What to Send
+
+You only need to send **ONE file**:
+
+```
+setup.exe (11.08 MB)
+```
+
+That's it! Everything else is included inside the installer.
+
+---
+
+## How Users Install
+
+1. **Download** setup.exe
+2. **Double-click** the file
+3. **Click** "Install" button
+4. **Wait** ~1 minute
+5. **Done!** Application is ready
+
+---
+
+## After Installation
+
+The application will be in two places:
+
+- **Desktop shortcut** → Double-click to launch
+- **Start Menu** → Search "Kayo Script Gen" and click
+
+---
+
+## Optional: Include This Guide
+
+You can optionally send **SETUP_GUIDE.txt** if users ask questions.
+
+---
+
+## That's All!
+
+Users don't need to know about:
+- Python
+- PyInstaller  
+- Build scripts
+- Build directories
+- Configuration files
+- Test reports
+- Documentation guides
+
+Just send them **setup.exe** and they'll be fine.
+
+---
+
+## What Happens When They Run setup.exe
+
+1. A professional Windows installer opens
+2. They click "Install"
+3. Files copy automatically
+4. Shortcuts created automatically
+5. Application ready to use
+6. They can uninstall anytime
+
+**Zero technical knowledge required** ✅

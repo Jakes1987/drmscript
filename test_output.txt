@@ -1,0 +1,23 @@
+[!] Port 5000 is in use, using port 5001 instead
+
+======================================================================
+Kayo to O11V4 Script Generator - Web GUI Launcher
+======================================================================
+Starting web server on http://127.0.0.1:5001
+Press Ctrl+C to stop the server
+
+Waiting for server to start...
+[!] Server did not start in time, browser not opened
+[!] Please try opening http://127.0.0.1:5001 manually
+======================================================================
+
+
+============================================================
+Kayo to O11V4 Script Generator - Web Interface
+============================================================
+Server running at: http://127.0.0.1:5001
+Press Ctrl+C to stop the server
+============================================================
+
+ * Serving Flask app 'web_server'
+ * Debug mode: off

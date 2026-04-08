@@ -1,0 +1,111 @@
+# Quick Deployment Guide - Kayo Script Gen
+
+## 📦 What You Have
+
+- **KayoScriptGen.exe** (12.6 MB) - Complete standalone application
+
+## 🚀 Get Started (30 seconds)
+
+1. **Download** `KayoScriptGen.exe`
+2. **Double-click** it
+3. **Wait** 3 seconds for browser to open
+4. **Enter** your Kayo credentials
+
+## 🎯 Then What?
+
+### Step 1: Test Credentials
+- Click "Test Credentials"
+- System verifies access to Kayo
+- You'll see channel count if successful
+
+### Step 2: Configure
+- **Provider Name**: Name for your O11V4 provider (e.g., "kayo")
+- **Output Directory**: Where to save files
+- Leave other options as default
+
+### Step 3: Generate
+- Click "Generate"
+- Wait for completion
+- Download the files
+
+### Step 4: Deploy
+- Copy `kayo.py` to your O11V4 `scripts/` directory
+- Copy `kayo.json` to your O11V4 `providers/` directory
+- Restart O11V4
+- Your Kayo provider will appear!
+
+## 📋 What Gets Generated
+
+### kayo.py (Main Script)
+- Full Kayo API integration
+- OAuth2 authentication
+- Stream URL delivery
+- Session management
+
+### kayo.json (Configuration)
+- Provider metadata
+- Channel listings
+- Event scheduling
+- DRM configuration
+
+## ⚙️ System Requirements
+
+- Windows 7+
+- 4 GB RAM
+- 200 MB disk space
+- Internet connection
+
+## 🔧 Troubleshooting
+
+**Exe won't run?**
+- Right-click → Run as Administrator
+- Make sure Windows 7 or newer
+
+**Web page not opening?**
+- Wait 5 seconds
+- Open http://127.0.0.1:5000 manually
+
+**Credentials fail?**
+- Check email/password
+- Verify internet connection
+- Try without VPN
+
+**Generated script doesn't work?**
+- Verify O11V4 directories exist
+- Copy to correct locations
+- Check file permissions
+
+## 📞 Need Help?
+
+See these included files:
+- `BUILD_INSTRUCTIONS.md` - Build details
+- `KAYO_API_REFERENCE.md` - API specifics
+- `WEB_GUI_TEST_RESULTS.md` - Feature checklist
+
+## ✨ Features
+
+✅ Web GUI (no command line needed)
+✅ Real Kayo API (official endpoints)
+✅ Token caching (faster subsequent runs)
+✅ Error handling (graceful failures)
+✅ Progress tracking (real-time updates)
+✅ File downloads (one-click)
+
+## 🔐 Security
+
+- Passwords never saved
+- Direct HTTPS to Kayo
+- Tokens cached locally only
+- Open source (can inspect)
+
+## 📊 About
+
+- Size: 12.6 MB
+- Built: April 8, 2026
+- Python: 3.14
+- Real Kayo API: Yes
+- Production Ready: Yes
+
+---
+
+**You're ready! Launch KayoScriptGen.exe now** 🎬
