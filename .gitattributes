@@ -1,0 +1,29 @@
+# Auto normalize line endings for all files
+* text=auto
+
+# Bash scripts - always LF
+*.sh text eol=lf
+installer.sh text eol=lf
+launcher.sh text eol=lf
+*.bash text eol=lf
+
+# Python - always LF
+*.py text eol=lf
+
+# Windows batch - always CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# JSON - always LF
+*.json text eol=lf
+
+# Markdown/Docs - always LF
+*.md text eol=lf
+*.txt text eol=lf
+
+# Binary files
+*.exe binary
+*.dll binary
+*.so binary
+*.pyc binary
