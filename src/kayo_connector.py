@@ -386,6 +386,29 @@ class KayoConnector:
             logger.error(f"Failed to fetch events: {str(e)}")
             return []
     
+    def get_manifest(self) -> Dict[str, Any]:
+        """
+        Get provider manifest/metadata
+        
+        Returns:
+            Dictionary containing provider metadata
+        """
+        try:
+            manifest = {
+                "provider": "kayo",
+                "version": "1.0",
+                "channels_count": len(self.channels or []),
+                "authenticated": bool(self.access_token),
+                "profile_id": self.profile_id,
+                "last_updated": datetime.now().isoformat()
+            }
+            logger.info(f"Retrieved manifest: {manifest.get('provider')}")
+            return manifest
+            
+        except Exception as e:
+            logger.error(f"Failed to get manifest: {str(e)}")
+            return {}
+    
     def test_login(self) -> bool:
         """Test if login credentials are valid"""
         return self.authenticate()
