@@ -15,6 +15,7 @@ NC='\033[0m' # No Color
 
 # Configuration
 LOCAL_PORT=5000
+EXTERNAL_PORT="${2:-8080}"
 NGINX_CONF="/etc/nginx/sites-available/kayo-script-gen"
 NGINX_ENABLED="/etc/nginx/sites-enabled/kayo-script-gen"
 DOMAIN_OR_IP="${1:-}"
@@ -87,55 +88,30 @@ fi
 cat > "$NGINX_CONF" << EOF
 # Nginx Reverse Proxy Configuration for Kayo Script Generator
 # Auto-generated on $(date)
+# Local app is on port $LOCAL_PORT
+# External access is on port $EXTERNAL_PORT
+# Port 80 remains free for O11V4 panel
 
 upstream kayo_app {
     server localhost:$LOCAL_PORT;
     keepalive 32;
 }
 
-# Redirect HTTP to HTTPS (if SSL is enabled)
+# Main HTTP configuration (on port $EXTERNAL_PORT to avoid conflict with O11V4 on port 80)
 server {
-    listen 80;
-    listen [::]:80;
+    listen $EXTERNAL_PORT;
+    listen [::]:$EXTERNAL_PORT;
     server_name $DOMAIN_OR_IP;
 
-    # Allow Let's Encrypt verification
-    location /.well-known/acme-challenge/ {
-        root /var/www/certbot;
-    }
-
-    # Redirect everything else to HTTPS
-    location / {
-        return 301 https://\$server_name\$request_uri;
-    }
-}
-
-# Main HTTPS configuration
-server {
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
-    server_name $DOMAIN_OR_IP;
-
-    # SSL Certificate paths (update after obtaining certificate)
-    ssl_certificate /etc/letsencrypt/live/$DOMAIN_OR_IP/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/$DOMAIN_OR_IP/privkey.pem;
-
-    # SSL Security
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers HIGH:!aNULL:!MD5;
-    ssl_prefer_server_ciphers on;
-    ssl_session_cache shared:SSL:10m;
-    ssl_session_timeout 10m;
+    # Logging
+    access_log /var/log/nginx/kayo-script-gen.access.log;
+    error_log /var/log/nginx/kayo-script-gen.error.log;
 
     # Security headers
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-XSS-Protection "1; mode=block" always;
     add_header Referrer-Policy "no-referrer-when-downgrade" always;
-
-    # Logging
-    access_log /var/log/nginx/kayo-script-gen.access.log;
-    error_log /var/log/nginx/kayo-script-gen.error.log;
 
     # Proxy configuration
     location / {
@@ -222,37 +198,24 @@ echo -e "${GREEN}║         ✓ Nginx Setup Complete!                  ║${NC}
 echo -e "${GREEN}╚════════════════════════════════════════════════════╝${NC}"
 echo ""
 
-echo -e "${BLUE}IMPORTANT - SSL Certificate Setup:${NC}"
+echo -e "${BLUE}Remote Access Configuration:${NC}"
 echo ""
-echo "Your Nginx proxy is configured but needs an SSL certificate."
-echo "Choose one of the following options:"
-echo ""
-echo -e "${YELLOW}Option 1: Use Let's Encrypt (FREE - Recommended)${NC}"
-echo "Run:"
-echo "  sudo apt-get install -y certbot python3-certbot-nginx"
-echo "  sudo certbot certonly --webroot -w /var/www/certbot -d $DOMAIN_OR_IP"
-echo ""
-echo "Then update the SSL paths in: $NGINX_CONF"
-echo ""
-
-echo -e "${YELLOW}Option 2: Use Self-Signed Certificate (Testing Only)${NC}"
-echo "Run:"
-echo "  sudo mkdir -p /etc/nginx/ssl"
-echo "  sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \\"
-echo "    -keyout /etc/nginx/ssl/kayo-key.key \\"
-echo "    -out /etc/nginx/ssl/kayo-cert.crt"
-echo ""
-echo "Then update $NGINX_CONF with:"
-echo "  ssl_certificate /etc/nginx/ssl/kayo-cert.crt;"
-echo "  ssl_certificate_key /etc/nginx/ssl/kayo-key.key;"
-echo ""
-echo "Then reload: sudo systemctl reload nginx"
+echo -e "${YELLOW}Port Configuration:${NC}"
+echo "  Local Application Port:    $LOCAL_PORT (Kayo Script Generator)"
+echo "  External Nginx Port:       $EXTERNAL_PORT (Remote access)"
+echo "  Port 80:                   Available for O11V4 panel"
 echo ""
 
 echo -e "${BLUE}Remote Access URLs:${NC}"
 echo ""
-echo -e "${YELLOW}After SSL is set up:${NC}"
-echo "  https://$DOMAIN_OR_IP"
+echo -e "${YELLOW}Local Access (same network):${NC}"
+echo "  http://localhost:$LOCAL_PORT"
+echo ""
+echo -e "${YELLOW}Remote Access (via Nginx):${NC}"
+echo "  http://$DOMAIN_OR_IP:$EXTERNAL_PORT"
+echo ""
+echo -e "${YELLOW}O11V4 Panel Access:${NC}"
+echo "  http://$DOMAIN_OR_IP:80"
 echo ""
 
 echo -e "${BLUE}Useful Commands:${NC}"
@@ -267,10 +230,19 @@ echo "  Test configuration:        sudo nginx -t"
 echo "  Edit configuration:        sudo nano $NGINX_CONF"
 echo ""
 
+echo -e "${BLUE}Port Status:${NC}"
+echo ""
+echo "  Check which ports are in use:"
+echo "    sudo ss -tlnp | grep LISTEN"
+echo ""
+
 echo -e "${BLUE}Ensure Application is Running:${NC}"
 echo ""
-echo "The local web server must be running on port $LOCAL_PORT"
-echo "Start with: kayo-script-gen"
+echo "The local web server must be running on port $LOCAL_PORT:"
+echo "  kayo-script-gen"
+echo ""
+echo "Or specify port:"
+echo "  kayo-script-gen --port $LOCAL_PORT"
 echo ""
 
 echo "════════════════════════════════════════════════════════════"

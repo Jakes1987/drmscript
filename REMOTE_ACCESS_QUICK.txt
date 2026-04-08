@@ -10,25 +10,26 @@ Choose your platform and use case below:
 FOR LINUX/UBUNTU SERVERS (Recommended)
 ================================================================================
 
+PORT CONFIGURATION (Important!):
+  - Port 80:   O11V4 Panel (web interface)
+  - Port 5000: Kayo Script Generator (local app)
+  - Port 8080: Nginx reverse proxy (remote access)
+
 QUICKEST SETUP (5 minutes):
 
 1. On your Ubuntu/Debian server:
    
    sudo bash <(curl -fsSL https://raw.githubusercontent.com/Jakes1987/drmscript/main/setup-nginx-remote.sh)
 
-2. Choose your domain or IP when prompted
+2. Nginx automatically uses port 8080 (preserving port 80 for O11V4)
 
-3. Get a free SSL certificate:
-   
-   sudo certbot certonly --webroot -w /var/www/certbot -d your-domain.com
-
-4. Start your application:
+3. Start your application:
    
    kayo-script-gen
 
-5. Access remotely:
+4. Access remotely:
    
-   https://your-domain.com
+   http://your-ip-address:8080
 
 📖 Full guide: NGINX_SETUP_GUIDE.md
 
@@ -91,33 +92,29 @@ STEP 1: Run Setup Script
    curl -fsSL https://raw.githubusercontent.com/Jakes1987/drmscript/main/setup-nginx-remote.sh -o setup-nginx-remote.sh
    sudo bash setup-nginx-remote.sh
 
-STEP 2: Get SSL Certificate (Choose One)
+   The script automatically:
+   - Installs Nginx
+   - Configures reverse proxy on port 8080
+   - Leaves port 80 free for O11V4 panel
+   - Proxies localhost:5000
 
-   A) Let's Encrypt (Free, Recommended):
-      sudo apt-get install -y certbot python3-certbot-nginx
-      sudo certbot certonly --webroot -w /var/www/certbot -d your-domain.com
-
-   B) Self-Signed (Testing Only):
-      sudo mkdir -p /etc/nginx/ssl
-      sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-        -keyout /etc/nginx/ssl/kayo-key.key \
-        -out /etc/nginx/ssl/kayo-cert.crt
-      
-      Then edit: sudo nano /etc/nginx/sites-available/kayo-script-gen
-      Change:
-        ssl_certificate /etc/nginx/ssl/kayo-cert.crt;
-        ssl_certificate_key /etc/nginx/ssl/kayo-key.key;
-
-STEP 3: Reload Nginx
-   sudo systemctl reload nginx
-
-STEP 4: Start Application
+STEP 2: Start Application
    kayo-script-gen
 
-STEP 5: Access Remotely
-   https://your-domain-or-ip
+STEP 3: Open Firewall (if needed)
+   sudo ufw allow 80/tcp
+   sudo ufw allow 8080/tcp
 
-✅ DONE! Your GUI is now accessible remotely with HTTPS
+STEP 4: Access Locally
+   http://localhost:5000
+
+STEP 5: Access Remotely
+   http://your-ip:8080
+
+STEP 6: Access O11V4 Panel
+   http://your-ip:80
+
+✅ DONE! Your GUI is now accessible remotely on port 8080
 
 ================================================================================
 STEP-BY-STEP: WINDOWS - NGROK (Quickest)

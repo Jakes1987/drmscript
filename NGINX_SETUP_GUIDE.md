@@ -4,13 +4,18 @@
 
 The `setup-nginx-remote.sh` script configures Nginx as a reverse proxy to allow remote access to your Kayo Script Generator web GUI.
 
-**Benefits:**
-- ✅ Access your GUI from anywhere on the network or internet
-- ✅ Automatic HTTP to HTTPS redirection
-- ✅ SSL/TLS encryption for security
+**Key Features:**
+- ✅ Runs on **port 8080** (leaves port 80 free for O11V4 panel)
+- ✅ Proxies local application running on **port 5000**
 - ✅ WebSocket support for real-time updates
 - ✅ Automatic caching of static files
 - ✅ Security headers and protections
+- ✅ No SSL/HTTPS needed (HTTP on port 8080)
+
+**Port Configuration:**
+- **Port 80**: Available for O11V4 panel
+- **Port 5000**: Local Kayo application
+- **Port 8080**: Nginx reverse proxy (remote access)
 
 ---
 
@@ -19,12 +24,14 @@ The `setup-nginx-remote.sh` script configures Nginx as a reverse proxy to allow 
 ### On Ubuntu/Debian Server:
 
 ```bash
-# Download and run the setup script
+# Download and run the setup script (port 8080 is default)
 sudo bash <(curl -fsSL https://raw.githubusercontent.com/Jakes1987/drmscript/main/setup-nginx-remote.sh)
 
-# Or with a domain/IP specified
-sudo bash <(curl -fsSL https://raw.githubusercontent.com/Jakes1987/drmscript/main/setup-nginx-remote.sh) example.com
+# Or specify a different port if needed
+sudo bash <(curl -fsSL https://raw.githubusercontent.com/Jakes1987/drmscript/main/setup-nginx-remote.sh) your-ip-or-domain 8080
 ```
+
+**Note:** The script automatically uses port **8080** to avoid conflicts with O11V4 panel on port 80.
 
 ### Manual Installation:
 
@@ -55,77 +62,42 @@ sudo ./setup-nginx-remote.sh
 ### 1. Run the Nginx Setup Script
 
 ```bash
-sudo bash setup-nginx-remote.sh your-domain.com
-```
-
-Or let it auto-detect your IP:
-```bash
 sudo bash setup-nginx-remote.sh
 ```
 
-### 2. Install SSL Certificate
-
-**Option A: Let's Encrypt (Recommended - FREE)**
-
+Or with a specific IP/domain:
 ```bash
-# Install Certbot
-sudo apt-get install -y certbot python3-certbot-nginx
-
-# Get a certificate
-sudo certbot certonly --webroot -w /var/www/certbot -d your-domain.com
+sudo bash setup-nginx-remote.sh 192.168.1.100
 ```
 
-**Option B: Self-Signed (Testing Only)**
-
+Or with custom port:
 ```bash
-# Create certificate directory
-sudo mkdir -p /etc/nginx/ssl
-
-# Generate self-signed certificate
-sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-  -keyout /etc/nginx/ssl/kayo-key.key \
-  -out /etc/nginx/ssl/kayo-cert.crt
+sudo bash setup-nginx-remote.sh 192.168.1.100 8080
 ```
 
-Then update `/etc/nginx/sites-available/kayo-script-gen`:
-```nginx
-ssl_certificate /etc/nginx/ssl/kayo-cert.crt;
-ssl_certificate_key /etc/nginx/ssl/kayo-key.key;
-```
+### 2. Start Your Application
 
-### 3. Reload Nginx
-
+The application should be running on port 5000:
 ```bash
-sudo systemctl reload nginx
-```
-
-### 4. Start Your Application
-
-```bash
-# Make sure the app is running on port 5000
 kayo-script-gen
 ```
 
----
+### 3. Access Your Application
 
-## Accessing Your GUI Remotely
+**Local Access:**
+```
+http://localhost:5000
+```
 
-Once everything is set up:
+**Remote Access (via Nginx on port 8080):**
+```
+http://your-ip-or-domain:8080
+```
 
-1. **Locally (same network):**
-   ```
-   https://your-ip-or-domain
-   ```
-
-2. **Remotely (from anywhere):**
-   ```
-   https://your-ip-or-domain
-   ```
-
-3. **From another machine on network:**
-   ```
-   https://192.168.x.x:443
-   ```
+**O11V4 Panel (still on port 80):**
+```
+http://your-ip-or-domain:80
+```
 
 ---
 
@@ -136,9 +108,45 @@ Once everything is set up:
 /etc/nginx/sites-available/kayo-script-gen
 ```
 
+### Port Configuration
+
+The script uses these ports by default:
+
+| Port | Service | Notes |
+|------|---------|-------|
+| 5000 | Kayo Script Generator (local) | Application runs here |
+| 8080 | Nginx Reverse Proxy | External/remote access |
+| 80 | O11V4 Panel / Other Services | Kept free for other applications |
+
+### Change External Port
+
+If you want to use a different port instead of 8080:
+
+```bash
+sudo bash setup-nginx-remote.sh your-domain.com 9000
+```
+
+This will use port 9000 instead of 8080.
+
 ### Edit Configuration
 ```bash
 sudo nano /etc/nginx/sites-available/kayo-script-gen
+```
+
+### View Current Port Settings
+
+Look for these lines in the nginx config:
+```nginx
+upstream kayo_app {
+    server localhost:5000;
+    keepalive 32;
+}
+
+server {
+    listen 8080;        # External port
+    listen [::]:8080;
+    server_name $DOMAIN_OR_IP;
+}
 ```
 
 ### Common Customizations

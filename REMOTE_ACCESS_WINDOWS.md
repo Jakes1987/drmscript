@@ -216,6 +216,8 @@ https://kayo-script-gen.your-domain.com
 
 Run Nginx in Windows Subsystem for Linux (WSL).
 
+**Note:** Nginx will run on port 8080 in WSL to avoid conflicts with O11V4 panel on port 80.
+
 ### Prerequisites
 - WSL 2 installed
 - Ubuntu on WSL
@@ -233,7 +235,7 @@ Run Nginx in Windows Subsystem for Linux (WSL).
    sudo apt-get update
    sudo apt-get install nginx
 
-   # Run setup script
+   # Run setup script (automatically uses port 8080)
    curl -fsSL https://raw.githubusercontent.com/Jakes1987/drmscript/main/setup-nginx-remote.sh | bash
    ```
 
@@ -245,7 +247,7 @@ Run Nginx in Windows Subsystem for Linux (WSL).
 
 4. **Access:**
    ```
-   https://your-windows-ip
+   http://your-windows-ip:8080
    ```
 
 ---

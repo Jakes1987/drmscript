@@ -53,8 +53,8 @@ fi
 echo "Detected IP: $PRIMARY_IP"
 echo ""
 
-# Run Nginx setup with detected IP
-sudo bash "$TEMP_DIR/setup-nginx-remote.sh" "$PRIMARY_IP"
+# Run Nginx setup with detected IP and port 8080 (port 80 reserved for O11V4 panel)
+sudo bash "$TEMP_DIR/setup-nginx-remote.sh" "$PRIMARY_IP" 8080
 
 echo ""
 echo -e "${GREEN}╔════════════════════════════════════════════════════╗${NC}"
